@@ -99,6 +99,9 @@ class GameState:
             del attrs["__init__"]
 
         for thing, value in attrs.items():
+            # Ignoriamo una lista di attributi speciali consentiti
+            if thing in ("__firstlineno__", "__static_attributes__"):
+                continue
             if thing.startswith("__") and thing.endswith("__"):
                 raise TypeError(f"GameState subclasses cannot define a {thing} member")
             setattr(GameState, thing, value)

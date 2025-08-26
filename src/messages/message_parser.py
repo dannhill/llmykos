@@ -1,4 +1,4 @@
-# Generated from D:/Code/lykos/src/messages\message_parser.g4 by ANTLR 4.8
+# Generated from message_parser.g4 by ANTLR 4.13.2
 # encoding: utf-8
 from antlr4 import *
 from io import StringIO
@@ -8,51 +8,50 @@ if sys.version_info[1] > 5:
 else:
 	from typing.io import TextIO
 
-
 def serializedATN():
-    with StringIO() as buf:
-        buf.write("\3\u608b\ua72a\u8133\ub9ed\u417c\u3be7\u7786\u5964\3\23")
-        buf.write("\u0083\4\2\t\2\4\3\t\3\4\4\t\4\4\5\t\5\4\6\t\6\4\7\t\7")
-        buf.write("\4\b\t\b\4\t\t\t\4\n\t\n\4\13\t\13\4\f\t\f\4\r\t\r\4\16")
-        buf.write("\t\16\4\17\t\17\4\20\t\20\4\21\t\21\4\22\t\22\4\23\t\23")
-        buf.write("\3\2\3\2\3\2\3\3\3\3\3\3\7\3-\n\3\f\3\16\3\60\13\3\3\4")
-        buf.write("\3\4\3\4\3\4\3\5\3\5\3\5\5\59\n\5\3\5\3\5\3\6\3\6\6\6")
-        buf.write("?\n\6\r\6\16\6@\3\7\3\7\5\7E\n\7\3\b\3\b\3\b\3\b\3\b\3")
-        buf.write("\t\3\t\3\t\5\tO\n\t\3\t\7\tR\n\t\f\t\16\tU\13\t\3\t\3")
-        buf.write("\t\3\n\6\nZ\n\n\r\n\16\n[\3\13\3\13\5\13`\n\13\3\f\3\f")
-        buf.write("\3\f\3\r\3\r\3\r\3\16\3\16\5\16j\n\16\3\17\6\17m\n\17")
-        buf.write("\r\17\16\17n\3\20\3\20\5\20s\n\20\3\21\3\21\3\21\3\21")
-        buf.write("\3\21\3\22\6\22{\n\22\r\22\16\22|\3\23\3\23\5\23\u0081")
-        buf.write("\n\23\3\23\2\2\24\2\4\6\b\n\f\16\20\22\24\26\30\32\34")
-        buf.write("\36 \"$\2\2\2\177\2&\3\2\2\2\4.\3\2\2\2\6\61\3\2\2\2\b")
-        buf.write("\65\3\2\2\2\n<\3\2\2\2\fD\3\2\2\2\16F\3\2\2\2\20K\3\2")
-        buf.write("\2\2\22Y\3\2\2\2\24_\3\2\2\2\26a\3\2\2\2\30d\3\2\2\2\32")
-        buf.write("i\3\2\2\2\34l\3\2\2\2\36r\3\2\2\2 t\3\2\2\2\"z\3\2\2\2")
-        buf.write("$\u0080\3\2\2\2&\'\5\4\3\2\'(\7\2\2\3(\3\3\2\2\2)-\7\3")
-        buf.write("\2\2*-\5\6\4\2+-\5\20\t\2,)\3\2\2\2,*\3\2\2\2,+\3\2\2")
-        buf.write("\2-\60\3\2\2\2.,\3\2\2\2./\3\2\2\2/\5\3\2\2\2\60.\3\2")
-        buf.write("\2\2\61\62\5\b\5\2\62\63\5\4\3\2\63\64\5\16\b\2\64\7\3")
-        buf.write("\2\2\2\65\66\7\4\2\2\668\7\6\2\2\679\5\n\6\28\67\3\2\2")
-        buf.write("\289\3\2\2\29:\3\2\2\2:;\7\t\2\2;\t\3\2\2\2<>\7\b\2\2")
-        buf.write("=?\5\f\7\2>=\3\2\2\2?@\3\2\2\2@>\3\2\2\2@A\3\2\2\2A\13")
-        buf.write("\3\2\2\2BE\7\n\2\2CE\5\20\t\2DB\3\2\2\2DC\3\2\2\2E\r\3")
-        buf.write("\2\2\2FG\7\4\2\2GH\7\7\2\2HI\7\6\2\2IJ\7\t\2\2J\17\3\2")
-        buf.write("\2\2KL\7\5\2\2LN\5\22\n\2MO\5\26\f\2NM\3\2\2\2NO\3\2\2")
-        buf.write("\2OS\3\2\2\2PR\5\30\r\2QP\3\2\2\2RU\3\2\2\2SQ\3\2\2\2")
-        buf.write("ST\3\2\2\2TV\3\2\2\2US\3\2\2\2VW\7\16\2\2W\21\3\2\2\2")
-        buf.write("XZ\5\24\13\2YX\3\2\2\2Z[\3\2\2\2[Y\3\2\2\2[\\\3\2\2\2")
-        buf.write("\\\23\3\2\2\2]`\7\13\2\2^`\5\20\t\2_]\3\2\2\2_^\3\2\2")
-        buf.write("\2`\25\3\2\2\2ab\7\f\2\2bc\7\17\2\2c\27\3\2\2\2de\7\r")
-        buf.write("\2\2ef\5\32\16\2f\31\3\2\2\2gj\5 \21\2hj\5\34\17\2ig\3")
-        buf.write("\2\2\2ih\3\2\2\2j\33\3\2\2\2km\5\36\20\2lk\3\2\2\2mn\3")
-        buf.write("\2\2\2nl\3\2\2\2no\3\2\2\2o\35\3\2\2\2ps\7\20\2\2qs\5")
-        buf.write("\20\t\2rp\3\2\2\2rq\3\2\2\2s\37\3\2\2\2tu\7\20\2\2uv\7")
-        buf.write("\21\2\2vw\5\"\22\2wx\7\23\2\2x!\3\2\2\2y{\5$\23\2zy\3")
-        buf.write("\2\2\2{|\3\2\2\2|z\3\2\2\2|}\3\2\2\2}#\3\2\2\2~\u0081")
-        buf.write("\7\22\2\2\177\u0081\5\20\t\2\u0080~\3\2\2\2\u0080\177")
-        buf.write("\3\2\2\2\u0081%\3\2\2\2\20,.8@DNS[_inr|\u0080")
-        return buf.getvalue()
-
+    return [
+        4,1,17,129,2,0,7,0,2,1,7,1,2,2,7,2,2,3,7,3,2,4,7,4,2,5,7,5,2,6,7,
+        6,2,7,7,7,2,8,7,8,2,9,7,9,2,10,7,10,2,11,7,11,2,12,7,12,2,13,7,13,
+        2,14,7,14,2,15,7,15,2,16,7,16,2,17,7,17,1,0,1,0,1,0,1,1,1,1,1,1,
+        5,1,43,8,1,10,1,12,1,46,9,1,1,2,1,2,1,2,1,2,1,3,1,3,1,3,3,3,55,8,
+        3,1,3,1,3,1,4,1,4,4,4,61,8,4,11,4,12,4,62,1,5,1,5,3,5,67,8,5,1,6,
+        1,6,1,6,1,6,1,6,1,7,1,7,1,7,3,7,77,8,7,1,7,5,7,80,8,7,10,7,12,7,
+        83,9,7,1,7,1,7,1,8,4,8,88,8,8,11,8,12,8,89,1,9,1,9,3,9,94,8,9,1,
+        10,1,10,1,10,1,11,1,11,1,11,1,12,1,12,3,12,104,8,12,1,13,4,13,107,
+        8,13,11,13,12,13,108,1,14,1,14,3,14,113,8,14,1,15,1,15,1,15,1,15,
+        1,15,1,16,4,16,121,8,16,11,16,12,16,122,1,17,1,17,3,17,127,8,17,
+        1,17,0,0,18,0,2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34,0,0,
+        125,0,36,1,0,0,0,2,44,1,0,0,0,4,47,1,0,0,0,6,51,1,0,0,0,8,58,1,0,
+        0,0,10,66,1,0,0,0,12,68,1,0,0,0,14,73,1,0,0,0,16,87,1,0,0,0,18,93,
+        1,0,0,0,20,95,1,0,0,0,22,98,1,0,0,0,24,103,1,0,0,0,26,106,1,0,0,
+        0,28,112,1,0,0,0,30,114,1,0,0,0,32,120,1,0,0,0,34,126,1,0,0,0,36,
+        37,3,2,1,0,37,38,5,0,0,1,38,1,1,0,0,0,39,43,5,1,0,0,40,43,3,4,2,
+        0,41,43,3,14,7,0,42,39,1,0,0,0,42,40,1,0,0,0,42,41,1,0,0,0,43,46,
+        1,0,0,0,44,42,1,0,0,0,44,45,1,0,0,0,45,3,1,0,0,0,46,44,1,0,0,0,47,
+        48,3,6,3,0,48,49,3,2,1,0,49,50,3,12,6,0,50,5,1,0,0,0,51,52,5,2,0,
+        0,52,54,5,4,0,0,53,55,3,8,4,0,54,53,1,0,0,0,54,55,1,0,0,0,55,56,
+        1,0,0,0,56,57,5,7,0,0,57,7,1,0,0,0,58,60,5,6,0,0,59,61,3,10,5,0,
+        60,59,1,0,0,0,61,62,1,0,0,0,62,60,1,0,0,0,62,63,1,0,0,0,63,9,1,0,
+        0,0,64,67,5,8,0,0,65,67,3,14,7,0,66,64,1,0,0,0,66,65,1,0,0,0,67,
+        11,1,0,0,0,68,69,5,2,0,0,69,70,5,5,0,0,70,71,5,4,0,0,71,72,5,7,0,
+        0,72,13,1,0,0,0,73,74,5,3,0,0,74,76,3,16,8,0,75,77,3,20,10,0,76,
+        75,1,0,0,0,76,77,1,0,0,0,77,81,1,0,0,0,78,80,3,22,11,0,79,78,1,0,
+        0,0,80,83,1,0,0,0,81,79,1,0,0,0,81,82,1,0,0,0,82,84,1,0,0,0,83,81,
+        1,0,0,0,84,85,5,12,0,0,85,15,1,0,0,0,86,88,3,18,9,0,87,86,1,0,0,
+        0,88,89,1,0,0,0,89,87,1,0,0,0,89,90,1,0,0,0,90,17,1,0,0,0,91,94,
+        5,9,0,0,92,94,3,14,7,0,93,91,1,0,0,0,93,92,1,0,0,0,94,19,1,0,0,0,
+        95,96,5,10,0,0,96,97,5,13,0,0,97,21,1,0,0,0,98,99,5,11,0,0,99,100,
+        3,24,12,0,100,23,1,0,0,0,101,104,3,30,15,0,102,104,3,26,13,0,103,
+        101,1,0,0,0,103,102,1,0,0,0,104,25,1,0,0,0,105,107,3,28,14,0,106,
+        105,1,0,0,0,107,108,1,0,0,0,108,106,1,0,0,0,108,109,1,0,0,0,109,
+        27,1,0,0,0,110,113,5,14,0,0,111,113,3,14,7,0,112,110,1,0,0,0,112,
+        111,1,0,0,0,113,29,1,0,0,0,114,115,5,14,0,0,115,116,5,15,0,0,116,
+        117,3,32,16,0,117,118,5,17,0,0,118,31,1,0,0,0,119,121,3,34,17,0,
+        120,119,1,0,0,0,121,122,1,0,0,0,122,120,1,0,0,0,122,123,1,0,0,0,
+        123,33,1,0,0,0,124,127,5,16,0,0,125,127,3,14,7,0,126,124,1,0,0,0,
+        126,125,1,0,0,0,127,35,1,0,0,0,14,42,44,54,62,66,76,81,89,93,103,
+        108,112,122,126
+    ]
 
 class message_parser ( Parser ):
 
@@ -120,7 +119,7 @@ class message_parser ( Parser ):
 
     def __init__(self, input:TokenStream, output:TextIO = sys.stdout):
         super().__init__(input, output)
-        self.checkVersion("4.8")
+        self.checkVersion("4.13.2")
         self._interp = ParserATNSimulator(self, self.atn, self.decisionsToDFA, self.sharedContextCache)
         self._predicates = None
 
@@ -128,6 +127,7 @@ class message_parser ( Parser ):
 
 
     class MainContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -174,6 +174,7 @@ class message_parser ( Parser ):
 
 
     class StringContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -227,15 +228,15 @@ class message_parser ( Parser ):
                     self.state = 42
                     self._errHandler.sync(self)
                     token = self._input.LA(1)
-                    if token in [message_parser.TEXT]:
+                    if token in [1]:
                         self.state = 39
                         self.match(message_parser.TEXT)
                         pass
-                    elif token in [message_parser.OPEN_TAG]:
+                    elif token in [2]:
                         self.state = 40
                         self.tag()
                         pass
-                    elif token in [message_parser.OPEN_SUB]:
+                    elif token in [3]:
                         self.state = 41
                         self.sub()
                         pass
@@ -256,6 +257,7 @@ class message_parser ( Parser ):
 
 
     class TagContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -309,6 +311,7 @@ class message_parser ( Parser ):
 
 
     class Open_tagContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -355,7 +358,7 @@ class message_parser ( Parser ):
             self.state = 54
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==message_parser.TAG_SEP:
+            if _la==6:
                 self.state = 53
                 self.tag_param()
 
@@ -372,6 +375,7 @@ class message_parser ( Parser ):
 
 
     class Tag_paramContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -419,7 +423,7 @@ class message_parser ( Parser ):
                 self.state = 62 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==message_parser.OPEN_SUB or _la==message_parser.TAG_PARAM):
+                if not (_la==3 or _la==8):
                     break
 
         except RecognitionException as re:
@@ -432,6 +436,7 @@ class message_parser ( Parser ):
 
 
     class Tag_param_fragContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -466,12 +471,12 @@ class message_parser ( Parser ):
             self.state = 66
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [message_parser.TAG_PARAM]:
+            if token in [8]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 64
                 self.match(message_parser.TAG_PARAM)
                 pass
-            elif token in [message_parser.OPEN_SUB]:
+            elif token in [3]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 65
                 self.sub()
@@ -489,6 +494,7 @@ class message_parser ( Parser ):
 
 
     class Close_tagContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -544,6 +550,7 @@ class message_parser ( Parser ):
 
 
     class SubContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -598,7 +605,7 @@ class message_parser ( Parser ):
             self.state = 76
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            if _la==message_parser.SUB_CONVERT:
+            if _la==10:
                 self.state = 75
                 self.sub_convert()
 
@@ -606,7 +613,7 @@ class message_parser ( Parser ):
             self.state = 81
             self._errHandler.sync(self)
             _la = self._input.LA(1)
-            while _la==message_parser.SUB_SPEC:
+            while _la==11:
                 self.state = 78
                 self.sub_spec()
                 self.state = 83
@@ -625,6 +632,7 @@ class message_parser ( Parser ):
 
 
     class Sub_fieldContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -667,7 +675,7 @@ class message_parser ( Parser ):
                 self.state = 89 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==message_parser.OPEN_SUB or _la==message_parser.SUB_FIELD):
+                if not (_la==3 or _la==9):
                     break
 
         except RecognitionException as re:
@@ -680,6 +688,7 @@ class message_parser ( Parser ):
 
 
     class Sub_field_fragContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -714,12 +723,12 @@ class message_parser ( Parser ):
             self.state = 93
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [message_parser.SUB_FIELD]:
+            if token in [9]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 91
                 self.match(message_parser.SUB_FIELD)
                 pass
-            elif token in [message_parser.OPEN_SUB]:
+            elif token in [3]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 92
                 self.sub()
@@ -737,6 +746,7 @@ class message_parser ( Parser ):
 
 
     class Sub_convertContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -782,6 +792,7 @@ class message_parser ( Parser ):
 
 
     class Sub_specContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -828,6 +839,7 @@ class message_parser ( Parser ):
 
 
     class Spec_valueContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -886,6 +898,7 @@ class message_parser ( Parser ):
 
 
     class Spec_literalContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -928,7 +941,7 @@ class message_parser ( Parser ):
                 self.state = 108 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==message_parser.OPEN_SUB or _la==message_parser.SPEC_VALUE):
+                if not (_la==3 or _la==14):
                     break
 
         except RecognitionException as re:
@@ -941,6 +954,7 @@ class message_parser ( Parser ):
 
 
     class Spec_literal_fragContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -975,12 +989,12 @@ class message_parser ( Parser ):
             self.state = 112
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [message_parser.SPEC_VALUE]:
+            if token in [14]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 110
                 self.match(message_parser.SPEC_VALUE)
                 pass
-            elif token in [message_parser.OPEN_SUB]:
+            elif token in [3]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 111
                 self.sub()
@@ -998,6 +1012,7 @@ class message_parser ( Parser ):
 
 
     class Spec_funcContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1054,6 +1069,7 @@ class message_parser ( Parser ):
 
 
     class Spec_func_argContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1096,7 +1112,7 @@ class message_parser ( Parser ):
                 self.state = 122 
                 self._errHandler.sync(self)
                 _la = self._input.LA(1)
-                if not (_la==message_parser.OPEN_SUB or _la==message_parser.ARGLIST_VALUE):
+                if not (_la==3 or _la==16):
                     break
 
         except RecognitionException as re:
@@ -1109,6 +1125,7 @@ class message_parser ( Parser ):
 
 
     class Spec_func_arg_fragContext(ParserRuleContext):
+        __slots__ = 'parser'
 
         def __init__(self, parser, parent:ParserRuleContext=None, invokingState:int=-1):
             super().__init__(parent, invokingState)
@@ -1143,12 +1160,12 @@ class message_parser ( Parser ):
             self.state = 126
             self._errHandler.sync(self)
             token = self._input.LA(1)
-            if token in [message_parser.ARGLIST_VALUE]:
+            if token in [16]:
                 self.enterOuterAlt(localctx, 1)
                 self.state = 124
                 self.match(message_parser.ARGLIST_VALUE)
                 pass
-            elif token in [message_parser.OPEN_SUB]:
+            elif token in [3]:
                 self.enterOuterAlt(localctx, 2)
                 self.state = 125
                 self.sub()

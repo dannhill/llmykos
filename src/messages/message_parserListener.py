@@ -1,6 +1,6 @@
-# Generated from D:/Code/lykos/src/messages\message_parser.g4 by ANTLR 4.8
+# Generated from message_parser.g4 by ANTLR 4.13.2
 from antlr4 import *
-if __name__ is not None and "." in __name__:
+if "." in __name__:
     from .message_parser import message_parser
 else:
     from message_parser import message_parser
