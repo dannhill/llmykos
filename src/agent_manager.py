@@ -3,7 +3,7 @@ import random
 import threading
 from typing import Optional
 
-from src import users, wolfgame, channels, history
+from src import users, channels, history
 from src.agent import Agent, PERSONALITIES
 from src.users import User, FakeUser
 from src.context import NotLoggedIn
@@ -85,6 +85,7 @@ class AgentManager:
 
     def _schedule_speaking(self):
         """Schedules the next speaking event."""
+        from src import wolfgame
         if not wolfgame.GAME_STATE or wolfgame.GAME_STATE.current_phase != "day":
             self.stop_speaking()
             return
