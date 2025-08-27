@@ -663,6 +663,10 @@ gameplay: &gameplay
       _desc: The language the bot uses in messages and when processing incoming commands.
       _type: str
       _default: en
+    require_nickserv:
+      _desc: Whether or not to require players to be identified to NickServ in order to join the game.
+      _type: bool
+      _default: true
     rules:
       _desc: >
         The rules for this bot, either as an embedded string or a URL, returned by the !rules command.
