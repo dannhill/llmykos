@@ -663,6 +663,15 @@ gameplay: &gameplay
       _desc: The language the bot uses in messages and when processing incoming commands.
       _type: str
       _default: en
+    ai_agents:
+      _desc: The number of AI agents to add to the game.
+      _type: dict
+      _nullable: true
+      _default:
+        count:
+          _desc: The number of AI agents to add to the game.
+          _type: int
+          _default: 0
     require_nickserv:
       _desc: Whether or not to require players to be identified to NickServ in order to join the game.
       _type: bool

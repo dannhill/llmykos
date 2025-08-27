@@ -2,3 +2,5 @@ antlr4-python3-runtime~=4.11.1
 ruamel.yaml >= 0.16.0, < 1.0.0
 requests >= 2.24.0, < 3.0.0
 cryptography >= 38.0.4
+python-dotenv >= 1.0.0
+google-generativeai >= 0.5.4

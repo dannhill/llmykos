@@ -18,7 +18,7 @@ from src.warnings import decrement_stasis
 from src.messages import messages
 from src.events import Event, event_listener
 from src.cats import All
-from src import config, channels, locks, reaper, users
+from src import config, channels, locks, reaper, users, history
 from src.users import User
 from src.dispatcher import MessageDispatcher
 from src.channels import Channel
@@ -139,6 +139,8 @@ def on_del_player(evt: Event, var: GameState, player: User, all_roles: set[str],
 
 def start(wrapper: MessageDispatcher, *, forced: bool = False):
     from src.trans import stop_game, ADMIN_STOPPED, TIMERS
+
+    history.clear_history()
 
     pregame_state: PregameState = wrapper.game_state
 

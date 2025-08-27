@@ -19,7 +19,7 @@ from src.events import Event, event_listener
 from src.votes import chk_decision
 from src.cats import Win_Stealer, Wolf_Objective, Vampire_Objective, Village_Objective, role_order, get_team, All, \
     Category, Nobody, Hidden
-from src import channels, users, locks, config, db, reaper, relay
+from src import channels, users, locks, config, db, reaper, relay, agent_manager
 from src.dispatcher import MessageDispatcher
 from src.gamestate import GameState, PregameState
 from src.random import random
@@ -78,6 +78,7 @@ def fday(wrapper: MessageDispatcher, message: str):
         transition_day(wrapper.game_state)
 
 def begin_day(var: GameState):
+    agent_manager.start_speaking()
     global DAY_ID
     DAY_ID = time.time()
     pl = get_players(var)
@@ -468,6 +469,7 @@ def chk_nightdone(var: GameState):
         event.data["transition_day"](var)
 
 def stop_game(var: Optional[GameState | PregameState], winner: Category = Nobody, abort=False, additional_winners=None, log=True):
+    agent_manager.stop_speaking()
     global DAY_TIMEDELTA, NIGHT_TIMEDELTA, ENDGAME_COMMAND
     if abort:
         channels.Main.send(messages["role_attribution_failed"])

@@ -17,7 +17,7 @@ from src import config, users, channels, pregame, trans
 from src.dispatcher import MessageDispatcher
 from src.gamestate import GameState
 from src.users import User
-
+from src.agent_manager import agent_manager
 LAST_STATS: Optional[datetime] = None
 LAST_TIME: Optional[datetime] = None
 LAST_ADMINS: Optional[datetime] = None
@@ -301,3 +301,42 @@ def on_reset(evt: Event, var: GameState):
     LAST_STATS = None
     LAST_TIME = None
     LAST_GOAT.clear()
+
+@command("addagent", flag="a", pm=True, chan=True)
+def add_agent(wrapper: MessageDispatcher, message: str):
+    """Adds an AI agent to the game. [p]addagent [personality]"""
+    parts = message.split()
+    personality = None
+    if parts:
+        personality = parts[0].lower()
+        if personality not in agent_manager.PERSONALITIES:
+            wrapper.pm(f"Unknown personality: {personality}")
+            return
+
+    agent = agent_manager.create_agent(personality)
+    if agent:
+        wrapper.pm(f"AI agent {agent.user.nick} ({agent.personality}) has been created.")
+    else:
+        wrapper.pm("Failed to create AI agent.")
+
+@command("removeagent", flag="a", pm=True, chan=True)
+def remove_agent(wrapper: MessageDispatcher, message: str):
+    """Removes an AI agent from the game. [p]removeagent <nick>"""
+    if not message:
+        wrapper.pm("You must specify the nick of the agent to remove.")
+        return
+
+    user = users.get(message, allow_none=True)
+    if not user:
+        wrapper.pm(f"User {message} not found.")
+        return
+
+    agent = agent_manager.get_agent(user)
+    if not agent:
+        wrapper.pm(f"User {user.nick} is not an AI agent.")
+        return
+
+    if agent_manager.remove_agent(user):
+        wrapper.pm(f"AI agent {user.nick} has been removed.")
+    else:
+        wrapper.pm(f"Failed to remove AI agent {user.nick}.")

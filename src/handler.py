@@ -11,7 +11,7 @@ import sys
 from typing import Optional
 
 from oyoyo.client import IRCClient
-from src import channels, config, context, decorators, users
+from src import channels, config, context, decorators, users, history
 from src.messages import messages
 from src.functions import get_participants, get_all_roles, match_role
 from src.dispatcher import MessageDispatcher
@@ -63,7 +63,9 @@ def on_privmsg(cli, rawnick, chan, msg, *, notice=False):
         message = ""
 
     if wrapper.public and not key.startswith(config.Main.get("transports[0].user.command_prefix")):
+        history.add_message(user, msg)
         return  # channel message but no prefix; ignore
+
     parse_and_dispatch(wrapper, key, message)
 
 def parse_and_dispatch(wrapper: MessageDispatcher,
