@@ -39,3 +39,6 @@ botconfig.*
 .antlr/
 .vs/
 venv/
+
+# Env
+.env
