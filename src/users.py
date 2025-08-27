@@ -493,10 +493,12 @@ class User(IRCContext):
 
         # FIXME: needs to be transport aware
         acls = config.Main.get("access.entries")
-        accounts = set(e["account"] for e in acls if e["template"] == "owner")
-
-        if self.account and self.account in accounts:
-            return True
+        for entry in acls:
+            if entry["template"] == "owner":
+                if self.account and self.account == entry["account"]:
+                    return True
+                if entry["hostmask"] and self.match_hostmask(entry["hostmask"]):
+                    return True
 
         return False
 
@@ -510,9 +512,12 @@ class User(IRCContext):
             try:
                 # FIXME: needs to be transport aware
                 acls = config.Main.get("access.entries")
-                accounts = set(e["account"] for e in acls if e["template"] in ("admin", "owner"))
-                if self.account and self.account in accounts:
-                    return True
+                for entry in acls:
+                    if entry["template"] in ("admin", "owner"):
+                        if self.account and self.account == entry["account"]:
+                            return True
+                        if entry["hostmask"] and self.match_hostmask(entry["hostmask"]):
+                            return True
             except AttributeError:
                 pass
 

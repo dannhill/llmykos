@@ -343,6 +343,13 @@ access.entry: &access.entry
     template:
       _desc: Access template to grant to the account.
       _type: str
+    hostmask:
+      _desc: >
+        Hostmask for the user being granted access. This may be used as an alternative to account-based
+        authentication on servers that do not have a services complex to handle account registration and login.
+      _type: str
+      _nullable: true
+      _default: null
 
 access: &access
   _name: access
