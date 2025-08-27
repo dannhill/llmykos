@@ -19,7 +19,8 @@ from src.events import Event, event_listener
 from src.votes import chk_decision
 from src.cats import Win_Stealer, Wolf_Objective, Vampire_Objective, Village_Objective, role_order, get_team, All, \
     Category, Nobody, Hidden
-from src import channels, users, locks, config, db, reaper, relay, agent_manager
+from src import channels, users, locks, config, db, reaper, relay
+from src.agent_manager import agent_manager
 from src.dispatcher import MessageDispatcher
 from src.gamestate import GameState, PregameState
 from src.random import random

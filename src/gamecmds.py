@@ -17,6 +17,7 @@ from src import config, users, channels, pregame, trans
 from src.dispatcher import MessageDispatcher
 from src.gamestate import GameState
 from src.users import User
+from src.agent import PERSONALITIES
 from src.agent_manager import agent_manager
 LAST_STATS: Optional[datetime] = None
 LAST_TIME: Optional[datetime] = None
@@ -309,7 +310,7 @@ def add_agent(wrapper: MessageDispatcher, message: str):
     personality = None
     if parts:
         personality = parts[0].lower()
-        if personality not in agent_manager.PERSONALITIES:
+        if personality not in PERSONALITIES:
             wrapper.pm(f"Unknown personality: {personality}")
             return
 
