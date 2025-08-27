@@ -59,7 +59,7 @@ def join_player(wrapper: MessageDispatcher,
     if wrapper.target is not channels.Main:
         return
 
-    if not wrapper.source.is_fake and not wrapper.source.account:
+    if config.Main.get("gameplay.require_nickserv") and not wrapper.source.is_fake and not wrapper.source.account:
         if forced:
             who.send(messages["account_not_logged_in"].format(wrapper.source), notice=True)
         else:
