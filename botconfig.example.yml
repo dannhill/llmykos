@@ -139,6 +139,8 @@ logging:
 # Gameplay. This lets you modify certain aspects of the game to better customize the bot for your community.
 gameplay:
   language: en
+  # Whether or not to require players to be identified to NickServ to join the game.
+  # require_nickserv: true
   # Whether or not to allow nightchat, which lets players speak in the main channel during night.
   # If disabled, nobody can speak at night, but idle timers are also paused during the night.
   nightchat: true

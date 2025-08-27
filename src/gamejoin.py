@@ -59,7 +59,7 @@ def join_player(wrapper: MessageDispatcher,
     if wrapper.target is not channels.Main:
         return
 
-    if not wrapper.source.is_fake and not wrapper.source.account:
+    if config.Main.get("gameplay.require_nickserv") and not wrapper.source.is_fake and not wrapper.source.account:
         if forced:
             who.send(messages["account_not_logged_in"].format(wrapper.source), notice=True)
         else:
@@ -89,7 +89,7 @@ def _join_player(wrapper: MessageDispatcher, who: Optional[User] = None, forced=
     temp = wrapper.source.lower()
 
     # don't check unacked warnings on fjoin
-    if wrapper.source is who and db.has_unacknowledged_warnings(temp.account):
+    if wrapper.source is who and temp.account and db.has_unacknowledged_warnings(temp.account):
         wrapper.pm(messages["warn_unacked"])
         return False
 
