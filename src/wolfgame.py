@@ -62,11 +62,20 @@ from src.functions import (
     get_main_role, get_reveal_role, get_all_roles,
     match_role, match_mode
    )
+from src.agent_manager import agent_manager
 
 # dummy line just to make the src import not unused; having src in scope is useful for !eval and !exec
 assert src is not None
 
+def initialize_ai_agents(evt, cli):
+    """Create the initial set of AI agents."""
+    agent_manager.clear_agents()
+    count = config.Main.get("gameplay.ai_agents.count", 0)
+    for _ in range(count):
+        agent_manager.create_agent()
+
 def connect_callback():
+    EventListener(initialize_ai_agents).install("irc_connected")
     db.init_vars()
     SIGUSR1 = getattr(signal, "SIGUSR1", None)
     SIGUSR2 = getattr(signal, "SIGUSR2", None)

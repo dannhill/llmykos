@@ -22,7 +22,13 @@ Empty = EmptyType()
 class InvalidConfigValue(ValueError):
     pass
 
+_initialized = False
+
 def init():
+    global _initialized
+    if _initialized:
+        return
+
     bp = Path(__file__).parent
     Main.load_metadata(bp / "defaultsettings.yml")
 
@@ -46,6 +52,8 @@ def init():
         dp = bp.parent / "botconfig.debug.yml"
         if dp.is_file():
             Main.load_config(dp)
+
+    _initialized = True
 
 class Config:
     def __init__(self):
