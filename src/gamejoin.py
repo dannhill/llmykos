@@ -89,7 +89,7 @@ def _join_player(wrapper: MessageDispatcher, who: Optional[User] = None, forced=
     temp = wrapper.source.lower()
 
     # don't check unacked warnings on fjoin
-    if wrapper.source is who and db.has_unacknowledged_warnings(temp.account):
+    if wrapper.source is who and temp.account and db.has_unacknowledged_warnings(temp.account):
         wrapper.pm(messages["warn_unacked"])
         return False
 
