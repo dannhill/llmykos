@@ -316,6 +316,7 @@ def add_agent(wrapper: MessageDispatcher, message: str):
 
     agent = agent_manager.create_agent(personality)
     if agent:
+        agent_manager.join_agent_to_game(agent)
         wrapper.pm(f"AI agent {agent.user.nick} ({agent.personality}) has been created.")
     else:
         wrapper.pm("Failed to create AI agent.")

@@ -5,14 +5,17 @@ from typing import Optional
 
 from src import users, channels, history
 from src.agent import Agent, PERSONALITIES
+from src.dispatcher import MessageDispatcher
+from src.gamejoin import join_player
+from src.status import add_dying, kill_players
 from src.users import User, FakeUser
-from src.context import NotLoggedIn
 
 class AgentManager:
     def __init__(self):
         self.agents: list[Agent] = []
         self._nick_counter = 0
         self._speaking_timer: Optional[threading.Timer] = None
+        self._voting_timer: Optional[threading.Timer] = None
 
     def clear_agents(self):
         """Removes all AI agents from the game."""
@@ -20,7 +23,7 @@ class AgentManager:
             self.remove_agent(agent.user)
 
     def create_agent(self, personality: Optional[str] = None) -> Optional[Agent]:
-        """Creates a new AI agent and adds it to the game."""
+        """Creates a new AI agent."""
         if not PERSONALITIES:
             return None
 
@@ -37,10 +40,9 @@ class AgentManager:
                 break
 
         # The first argument to add is the client, which is None for fake users.
-        user = users.add(None, nick=nick, ident="AI", host="wolf.game", account=NotLoggedIn)
+        user = users.add(None, nick=nick, ident="AI", host="wolf.game", account=nick)
 
         if not isinstance(user, FakeUser):
-            # This shouldn't happen with a numeric nick, but as a safeguard:
             users._users.discard(user)
             return None
 
@@ -48,17 +50,24 @@ class AgentManager:
         self.agents.append(agent)
         return agent
 
+    def join_agent_to_game(self, agent: Agent):
+        """Joins an AI agent to the game."""
+        channels.Main.users.add(agent.user)
+        agent.user.channels[channels.Main] = set()
+
+        join_wrapper = MessageDispatcher(agent.user, channels.Main)
+        join_player(join_wrapper)
+
     def remove_agent(self, user: User) -> bool:
         """Removes an AI agent from the game."""
-        from src import wolfgame
-
         agent_to_remove = self.get_agent(user)
 
         if agent_to_remove:
             self.agents.remove(agent_to_remove)
 
-            if wolfgame.GAME_STATE and user in wolfgame.GAME_STATE.players:
-                wolfgame.del_participant(wolfgame.GAME_STATE, user)
+            if channels.Main.game_state and user in channels.Main.game_state.players:
+                add_dying(channels.Main.game_state, user, "bot", "remove", death_triggers=False)
+                kill_players(channels.Main.game_state)
 
             users._users.discard(user)
             return True
@@ -76,17 +85,47 @@ class AgentManager:
         """Starts the agent speaking timer."""
         if self._speaking_timer is None:
             self._schedule_speaking()
+        if self._voting_timer is None:
+            self._schedule_voting()
 
     def stop_speaking(self):
         """Stops the agent speaking timer."""
         if self._speaking_timer:
             self._speaking_timer.cancel()
             self._speaking_timer = None
+        if self._voting_timer:
+            self._voting_timer.cancel()
+            self._voting_timer = None
+
+    def _schedule_voting(self):
+        """Schedules the next voting event."""
+        if not channels.Main.game_state or channels.Main.game_state.current_phase != "day":
+            self.stop_voting()
+            return
+
+        interval = random.uniform(10, 20)
+        self._voting_timer = threading.Timer(interval, self._voting_tick)
+        self._voting_timer.daemon = True
+        self._voting_timer.start()
+
+    def _voting_tick(self):
+        """Called by the timer to make an agent vote."""
+        if not self.agents:
+            self.stop_voting()
+            return
+
+        if self.agents:
+            voting_chance = 1 / len(self.agents)
+            for agent in self.agents:
+                if random.random() < voting_chance:
+                    agent.generate_vote()
+                    break
+
+        self._schedule_voting()
 
     def _schedule_speaking(self):
         """Schedules the next speaking event."""
-        from src import wolfgame
-        if not wolfgame.GAME_STATE or wolfgame.GAME_STATE.current_phase != "day":
+        if not channels.Main.game_state or channels.Main.game_state.current_phase != "day":
             self.stop_speaking()
             return
 
@@ -101,7 +140,6 @@ class AgentManager:
             self.stop_speaking()
             return
 
-        # Each agent has a 1/n chance of speaking
         if self.agents:
             speaking_chance = 1 / len(self.agents)
             for agent in self.agents:
@@ -110,7 +148,7 @@ class AgentManager:
                     response = agent.generate_response(context)
                     if response:
                         channels.Main.send(f"<{agent.user.nick}> {response}")
-                    break # Only one agent speaks per tick
+                    break
 
         self._schedule_speaking()
 
