@@ -64,7 +64,11 @@ def get(nick=None, ident=None, host=None, account=None, *, allow_multiple=False,
 
     sentinel = object()
 
-    temp = User(sentinel, nick, ident, host, account)
+    cls = User
+    if nick is not None and predicate(nick):
+        cls = FakeUser
+
+    temp = cls(sentinel, nick, ident, host, account)
     if temp.client is not sentinel:  # actual client
         return [temp] if allow_multiple else temp
 
