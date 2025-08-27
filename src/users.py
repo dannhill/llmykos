@@ -308,7 +308,8 @@ class User(IRCContext):
 
         elif nick is not None and ident is not None and host is not None and account is not None:
             users = set(_users)
-            users.add(Bot)
+            if Bot is not None and not predicate(nick):
+                users.add(Bot)
             if self in users:
                 for user in users:
                     if self == user:
@@ -350,7 +351,7 @@ class User(IRCContext):
 
             potential = None
             users = set(_users)
-            if Bot is not None:
+            if Bot is not None and not predicate(nick):
                 users.add(Bot)
             for user in users:
                 if self.partial_match(user):
