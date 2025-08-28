@@ -93,6 +93,9 @@ class AgentManager:
         if self._speaking_timer:
             self._speaking_timer.cancel()
             self._speaking_timer = None
+
+    def stop_voting(self):
+        """Stops the agent voting timer."""
         if self._voting_timer:
             self._voting_timer.cancel()
             self._voting_timer = None
