@@ -142,8 +142,8 @@ class AgentManager:
             self.stop_speaking()
             return
 
-        # num of players * 5
-        average_interval = int(len(channels.Main.game_state.players) * 5)
+        # num of players * 3
+        average_interval = int(len(channels.Main.game_state.players) * 3)
         interval = random.uniform(average_interval - 3, average_interval + 3)
         self._speaking_timer = threading.Timer(interval, self._speaking_tick)
         self._speaking_timer.daemon = True
