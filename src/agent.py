@@ -1,4 +1,5 @@
 import os
+import re
 from dotenv import load_dotenv
 import google.generativeai as genai
 from src.users import FakeUser
@@ -25,7 +26,8 @@ class Agent:
 
         self.user = user
         self.personality = personality
-        self.system_prompt = PERSONALITIES[personality]
+        self.writing_style = "You don't have to think about your responses out loud, you just have to respond naturally knowing that everyone is listening. Use an informal writing style and don't write too long sentences. In addition you should never go next line, write everything in a single line."
+        self.system_prompt = self.writing_style + "\n\n" + PERSONALITIES[personality]
 
         if GEMINI_MODEL_NAME:
             self._client = genai.GenerativeModel(GEMINI_MODEL_NAME, system_instruction=self.system_prompt)
@@ -37,10 +39,84 @@ class Agent:
         Generates a response based on the given context.
         """
         if not self._client:
-            return "" # Or some default response
+            return ""
 
-        # This is a placeholder for the actual implementation
-        # of how the agent will generate a response.
-        # It will involve calling the Gemini API with the context.
-        response = self._client.generate_content(context)
+        messages = context.strip().split('\n')
+        contents = []
+        for msg in messages:
+            match = re.match(r'<([^>]+)> (.*)', msg)
+            if match:
+                author, text = match.groups()
+                role = "model" if author == self.user.nick else "user"
+                contents.append({
+                    "role": role,
+                    "parts": [{"text": f"{author}: {text}"}]
+                })
+            else:
+                contents.append({
+                    "role": "user",
+                    "parts": [{"text": msg}]
+                })
+
+        response = self._client.generate_content(contents)
         return response.text
+
+    def generate_vote(self):
+        """
+        Generates a vote for a player.
+        """
+        if not self._client:
+            return
+
+        from src.functions import get_players
+        from src.gamestate import GameState
+        from src.votes import VOTES
+        from src.dispatcher import MessageDispatcher
+        from src.handler import parse_and_dispatch
+        from src import channels, history
+
+        var = self.user.game_state
+        if not var or not isinstance(var, GameState):
+            return
+
+        if self.user in VOTES:
+            return
+
+        players = get_players(var)
+        if self.user in players:
+            players.remove(self.user)
+
+        if not players:
+            return
+
+        context = history.get_history()
+        messages = context.strip().split('\n')
+        contents = []
+        for msg in messages:
+            match = re.match(r'<([^>]+)> (.*)', msg)
+            if match:
+                author, text = match.groups()
+                role = "model" if author == self.user.nick else "user"
+                contents.append({
+                    "role": role,
+                    "parts": [{"text": f"{author}: {text}"}]
+                })
+            else:
+                contents.append({
+                    "role": "user",
+                    "parts": [{"text": msg}]
+                })
+
+        player_names = [p.nick for p in players]
+        prompt = f"Based on the conversation, who should you vote for? Please choose one of the following players: {', '.join(player_names)}. Only return the player's name. Write None to skip voting."
+        contents.append({
+            "role": "user",
+            "parts": [{"text": prompt}]
+        })
+
+        response = self._client.generate_content(contents)
+        player_to_vote = response.text.strip()
+
+        if player_to_vote in player_names:
+            wrapper = MessageDispatcher(self.user, channels.Main)
+            parse_and_dispatch(wrapper, "vote", player_to_vote)

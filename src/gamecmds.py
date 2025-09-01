@@ -308,17 +308,21 @@ def add_agent(wrapper: MessageDispatcher, message: str):
     """Adds an AI agent to the game. [p]addagent [personality]"""
     parts = message.split()
     personality = None
+    count = 1
     if parts:
         personality = parts[0].lower()
-        if personality not in PERSONALITIES:
+        if personality not in PERSONALITIES and personality != "random":
             wrapper.pm(f"Unknown personality: {personality}")
             return
+        count = int(parts[1]) if len(parts) > 1 and parts[1].isdigit() else 1
 
-    agent = agent_manager.create_agent(personality)
-    if agent:
-        wrapper.pm(f"AI agent {agent.user.nick} ({agent.personality}) has been created.")
-    else:
-        wrapper.pm("Failed to create AI agent.")
+    for _ in range(count):
+        agent = agent_manager.create_agent(personality)
+        if agent:
+            agent_manager.join_agent_to_game(agent)
+            wrapper.pm(f"AI agent {agent.user.nick} ({agent.personality}) has been created.")
+        else:
+            wrapper.pm("Failed to create AI agent.")
 
 @command("removeagent", flag="a", pm=True, chan=True)
 def remove_agent(wrapper: MessageDispatcher, message: str):
