@@ -79,7 +79,6 @@ def fday(wrapper: MessageDispatcher, message: str):
         transition_day(wrapper.game_state)
 
 def begin_day(var: GameState):
-    agent_manager.start_speaking()
     global DAY_ID
     DAY_ID = time.time()
     pl = get_players(var)
@@ -95,7 +94,7 @@ def begin_day(var: GameState):
         limit = 0
 
     var.end_phase_transition(limit, warn, hurry_up, (var, DAY_ID))
-
+    agent_manager.start_speaking()
     if not config.Main.get("gameplay.nightchat"):
         modes = []
         for player in pl:

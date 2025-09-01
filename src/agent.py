@@ -40,8 +40,6 @@ class Agent:
         if not self._client:
             return ""
 
-        from google.genai import types
-
         messages = context.strip().split('\n')
         contents = []
         for msg in messages:
@@ -49,25 +47,18 @@ class Agent:
             if match:
                 author, text = match.groups()
                 role = "model" if author == self.user.nick else "user"
-                contents.append(types.Content(role=role, parts=[types.Part.from_text(text=f"{author}: {text}")]))
+                contents.append({
+                    "role": role,
+                    "parts": [{"text": f"{author}: {text}"}]
+                })
             else:
-                contents.append(types.Content(role="user", parts=[types.Part.from_text(text=msg)]))
+                contents.append({
+                    "role": "user",
+                    "parts": [{"text": msg}]
+                })
 
-        tools = [
-            types.Tool(google_search=types.GoogleSearch()),
-        ]
-        generation_config = types.GenerateContentConfig(
-            thinking_config=types.ThinkingConfig(
-                thinking_budget=0,
-            ),
-            tools=tools,
-        )
-
-        response = self._client.generate_content(
-            contents=contents,
-            generation_config=generation_config,
-        )
-        return response.text
+        response = self._client.generate_content(contents)
+        return self.user.name + ": " + response.text
 
     def generate_vote(self):
         """
@@ -82,7 +73,6 @@ class Agent:
         from src.dispatcher import MessageDispatcher
         from src.handler import parse_and_dispatch
         from src import channels, history
-        from google.genai import types
 
         var = self.user.game_state
         if not var or not isinstance(var, GameState):
@@ -106,13 +96,22 @@ class Agent:
             if match:
                 author, text = match.groups()
                 role = "model" if author == self.user.nick else "user"
-                contents.append(types.Content(role=role, parts=[types.Part.from_text(text=f"{author}: {text}")]))
+                contents.append({
+                    "role": role,
+                    "parts": [{"text": f"{author}: {text}"}]
+                })
             else:
-                contents.append(types.Content(role="user", parts=[types.Part.from_text(text=msg)]))
+                contents.append({
+                    "role": "user",
+                    "parts": [{"text": msg}]
+                })
 
         player_names = [p.nick for p in players]
         prompt = f"Based on the conversation, who should you vote for? Please choose one of the following players: {', '.join(player_names)}. Only return the player's name."
-        contents.append(types.Content(role="user", parts=[types.Part.from_text(text=prompt)]))
+        contents.append({
+            "role": "user",
+            "parts": [{"text": prompt}]
+        })
 
         response = self._client.generate_content(contents)
         player_to_vote = response.text.strip()
